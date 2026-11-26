@@ -1,0 +1,9 @@
+{"at":0,"kind":"catalog","record":{"name":"a","rev":1,"groups":["base"],"audiences":["lab","partner"]}}
+{"at":0,"kind":"catalog","record":{"name":"b","rev":1,"groups":null,"audiences":["lab"]}}
+{"at":0,"kind":"budget","record":{"group":"base","cap":4}}
+{"at":1,"kind":"submit","record":{"id":"a","audience":"lab","sources":["a@1"],"unit":3}}
+{"at":2,"kind":"computed","record":{"id":"a","result":"q"}}
+{"at":3,"kind":"published","record":{"id":"a","state":"exposed"}}
+{"at":4,"kind":"submit","record":{"id":"b","audience":"lab","sources":["a@1","b@1"],"unit":1}}
+{"at":5,"kind":"submit","record":{"id":"c","audience":"partner","sources":["a@1"],"unit":3,"reuse":"q"}}
+{"at":6,"kind":"inspect","record":{"group":"base"}}

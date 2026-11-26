@@ -1,0 +1,13 @@
+{"at":0,"kind":"catalog","record":{"name":"a","rev":1,"groups":["shared","left"],"audiences":["lab"]}}
+{"at":0,"kind":"catalog","record":{"name":"b","rev":1,"groups":["shared","right"],"audiences":["lab"]}}
+{"at":0,"kind":"budget","record":{"group":"shared","cap":4}}
+{"at":0,"kind":"budget","record":{"group":"left","cap":10}}
+{"at":0,"kind":"budget","record":{"group":"right","cap":10}}
+{"at":1,"kind":"submit","record":{"id":"one","audience":"lab","sources":["a@1","b@1"],"unit":3}}
+{"at":2,"kind":"computed","record":{"id":"one","result":"digest"}}
+{"at":3,"kind":"withdraw","record":{"id":"one"}}
+{"at":4,"kind":"published","record":{"id":"one","state":"unknown"}}
+{"at":5,"kind":"submit","record":{"id":"two","audience":"lab","sources":["b@1"],"unit":2}}
+{"at":6,"kind":"restart","record":{}}
+{"at":7,"kind":"published","record":{"id":"one","state":"exposed"}}
+{"at":8,"kind":"inspect","record":{"group":"shared"}}
