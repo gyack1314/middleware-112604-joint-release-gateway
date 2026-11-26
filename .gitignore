@@ -10,3 +10,9 @@ coverage/
 __pycache__/
 *.py[cod]
 .DS_Store
+
+# 网关本地 SQLite 状态库与临时演练库
+*.db
+*.db-wal
+*.db-shm
+gateway_scenario.db

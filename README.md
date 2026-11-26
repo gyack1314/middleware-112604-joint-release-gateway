@@ -28,3 +28,34 @@
     python3 -m unittest discover -v
 
 资料读取器会按文件统计各类参与方消息的数量。演练记录只描述各参与方交给系统的输入。
+
+## 查询发布网关实现
+
+仓库在上述消息契约之上提供了标准库实现 `gateway/`（SQLite 持久化 + 状态机），
+完整规则、状态图与 API/CLI 说明见 [GATEWAY.md](GATEWAY.md)。
+
+```bash
+# 回放示例并查看处置轨迹
+python3 -m gateway run examples/overlap-and-late-publication.jsonl --format text
+python3 -m gateway run examples/unknown-overlap-and-scope-change.jsonl --format text
+
+# 维护集合/额度、发起查询、确认计算、提交回执、查询真实可用量
+python3 -m gateway catalog --name a --rev 1 --groups shared,left --audiences lab
+python3 -m gateway catalog --name b --rev 1 --groups shared,right --audiences lab
+python3 -m gateway budget --group shared --cap 4
+python3 -m gateway budget --group left --cap 10
+python3 -m gateway budget --group right --cap 10
+python3 -m gateway submit --id one --audience lab --sources a@1,b@1 --unit 3
+python3 -m gateway computed --id one --result digest
+python3 -m gateway published --id one --state exposed
+python3 -m gateway inspect --group shared
+
+# 全量测试
+python3 -m unittest discover -v
+```
+
+核心口径：`available = cap − committed − reserved`；提交时对所有已确定涉及的
+预算域做原子预留，未知群体范围（groups=null）不按不相交处理；`unknown` 回执与
+缺少参与者范围的 `never` 不释放预留；`exposed` 成为永不回滚的公开事实，撤销只
+关闭后续访问；同受众同修订重复读取已公开结果零成本，新受众或换修订需独立判断
+授权与预算；所有状态落盘，restart 或重开数据库后可继续推进。
